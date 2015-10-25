@@ -72,4 +72,4 @@ summarized <- aggregate(tidy_data, by = list(tidy_data$subject_id, tidy_data$act
 rmCols = grepl("Group",colnames(summarized)) # Remove unnecessary columns
 summarized <- (summarized[which(!rmCols)])
 
-write.table(summarized, "summary.txt", sep = ",")
+write.table(summarized, "summary.txt", sep = ",", row.names=FALSE)
