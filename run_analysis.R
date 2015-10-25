@@ -63,7 +63,7 @@ print("Tidy testing data built!")
 ## Combine it all together & save to tidy data folder
 print("Combining tidy data sets and exporting to CSV \"tidy_data.csv\"")
 tidy_data <- rbind(tidy_train, tidy_test)
-write.csv(tidy_data,"tidy/tidy_data.csv", row.names = FALSE)
+write.table(tidy_data,"tidy/tidy_data.txt", sep = ",", row.names = FALSE)
 print("Export complete")
 
 
@@ -72,4 +72,4 @@ summarized <- aggregate(tidy_data, by = list(tidy_data$subject_id, tidy_data$act
 rmCols = grepl("Group",colnames(summarized)) # Remove unnecessary columns
 summarized <- (summarized[which(!rmCols)])
 
-write.csv(summarized, "summary.csv")
+write.table(summarized, "summary.txt", sep = ",")
