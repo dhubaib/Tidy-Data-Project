@@ -23,7 +23,7 @@ desiredFeatures = grepl("mean|std",features$label)
 features <- features[desiredFeatures,]
 
 # Build data dictionary
-write.table(features$label, "codebook.md", sep = "\n", row.names = FALSE, col.names = "List of data elements included in tidy data project analysis", quote = FALSE)
+write.table(features$label, "codebook.txt", sep = "\n", row.names = FALSE, col.names = "List of data elements included in tidy data project analysis", quote = FALSE)
 
 # Prepare column names for tidy dataset 
 cnames <- c("subject_id","activity_number", "activity_label", as.character(features$label))
