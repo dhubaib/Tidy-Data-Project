@@ -22,12 +22,11 @@ colnames(features) <- c("number", "label")
 desiredFeatures = grepl("mean|std",features$label)
 features <- features[desiredFeatures,]
 
+# Build data dictionary
+write.table(features$label, "codebook.md", sep = "\n", row.names = FALSE, col.names = "List of data elements included in tidy data project analysis", quote = FALSE)
+
 # Prepare column names for tidy dataset 
 cnames <- c("subject_id","activity_number", "activity_label", as.character(features$label))
-
-# Build data dictionary 
-
-
 
 ## Load in training set
 # Read in subject ID, numbered activity & feature vector for that activity
@@ -64,5 +63,13 @@ print("Tidy testing data built!")
 ## Combine it all together & save to tidy data folder
 print("Combining tidy data sets and exporting to CSV \"tidy_data.csv\"")
 tidy_data <- rbind(tidy_train, tidy_test)
-write.csv(tidy_data,"tidy/tidy_data.csv", header = TRUE, row.names = FALSE)
+write.csv(tidy_data,"tidy/tidy_data.csv", row.names = FALSE)
 print("Export complete")
+
+
+## Summarize data
+summarized <- aggregate(tidy_data, by = list(tidy_data$subject_id, tidy_data$activity_label), FUN = mean, simplify = TRUE, na.action = na.omit)
+rmCols = grepl("Group",colnames(summarized)) # Remove unnecessary columns
+summarized <- (summarized[which(!rmCols)])
+
+write.csv(summarized, "summary.csv")
